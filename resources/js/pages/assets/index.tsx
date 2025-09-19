@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import AppLayout from '@/components/layouts/app-layout';
 import { type BreadcrumbItem } from '@/types';
-import { Head, Link, router } from '@inertiajs/react';
+import { Head, Link, router, usePage } from '@inertiajs/react';
 
 interface Asset {
     id: number;
@@ -22,6 +22,7 @@ interface Asset {
         nama_area: string;
     };
     user?: {
+        id: number;
         name: string;
     };
     departemen: {
@@ -71,6 +72,8 @@ interface Props {
         status?: string;
         search?: string;
     };
+    canCreate: boolean;
+    canManageUsers: boolean;
     [key: string]: unknown;
 }
 
@@ -81,7 +84,8 @@ const breadcrumbs: BreadcrumbItem[] = [
     },
 ];
 
-export default function AssetsIndex({ assets, filterOptions, filters }: Props) {
+export default function AssetsIndex({ assets, filterOptions, filters, canCreate }: Props) {
+    const { auth } = usePage<{ auth: { user: { id: number; role: string } } }>().props;
     const [searchTerm, setSearchTerm] = useState(filters.search || '');
     const [selectedFilters, setSelectedFilters] = useState(filters);
 
@@ -137,12 +141,14 @@ export default function AssetsIndex({ assets, filterOptions, filters }: Props) {
                             Manage and track all IT assets in your organization
                         </p>
                     </div>
-                    <Link
-                        href="/assets/create"
-                        className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg font-medium transition-colors flex items-center"
-                    >
-                        ➕ Add New Asset
-                    </Link>
+                    {canCreate && (
+                        <Link
+                            href="/assets/create"
+                            className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg font-medium transition-colors flex items-center"
+                        >
+                            ➕ Add New Asset
+                        </Link>
+                    )}
                 </div>
 
                 {/* Filters */}
@@ -336,12 +342,14 @@ export default function AssetsIndex({ assets, filterOptions, filters }: Props) {
                                                 >
                                                     👁️ View
                                                 </Link>
-                                                <Link
-                                                    href={`/assets/${asset.id}/edit`}
-                                                    className="text-yellow-600 hover:text-yellow-800 dark:text-yellow-400 dark:hover:text-yellow-300 text-sm"
-                                                >
-                                                    ✏️ Edit
-                                                </Link>
+                                                {(auth.user.role === 'admin' || asset.user?.id === auth.user.id) && (
+                                                    <Link
+                                                        href={`/assets/${asset.id}/edit`}
+                                                        className="text-yellow-600 hover:text-yellow-800 dark:text-yellow-400 dark:hover:text-yellow-300 text-sm"
+                                                    >
+                                                        ✏️ Edit
+                                                    </Link>
+                                                )}
                                             </div>
                                         </td>
                                     </tr>
@@ -388,12 +396,14 @@ export default function AssetsIndex({ assets, filterOptions, filters }: Props) {
                                 ? 'Try adjusting your search or filters to find assets.'
                                 : 'Get started by adding your first asset to the inventory.'}
                         </p>
-                        <Link
-                            href="/assets/create"
-                            className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg font-medium transition-colors"
-                        >
-                            Add First Asset
-                        </Link>
+                        {canCreate && (
+                            <Link
+                                href="/assets/create"
+                                className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg font-medium transition-colors"
+                            >
+                                Add First Asset
+                            </Link>
+                        )}
                     </div>
                 )}
             </div>

@@ -11,7 +11,16 @@ class UpdateAssetRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return auth()->check() && auth()->user()->isAdmin();
+        $user = auth()->user();
+        $asset = $this->route('asset');
+        
+        // Admin can update any asset
+        if ($user->isAdmin()) {
+            return true;
+        }
+        
+        // Regular user can only update assets assigned to them
+        return $asset->user_id === $user->id;
     }
 
     /**
@@ -21,23 +30,33 @@ class UpdateAssetRequest extends FormRequest
      */
     public function rules(): array
     {
+        $user = auth()->user();
         $assetId = $this->route('asset')->id;
 
+        // Admin can update all fields
+        if ($user->isAdmin()) {
+            return [
+                'nomor_asset' => 'required|string|max:255|unique:assets,nomor_asset,' . $assetId,
+                'kategori_barang_id' => 'required|exists:kategori_barangs,id',
+                'nama_barang' => 'required|string|max:255',
+                'serial_number' => 'required|string|max:255|unique:assets,serial_number,' . $assetId,
+                'operation_system' => 'nullable|string|max:255',
+                'kondisi_perangkat' => 'required|in:Baik,Rusak',
+                'site_id' => 'required|exists:sites,id',
+                'area_posisi_id' => 'required|exists:area_posisis,id',
+                'user_id' => 'nullable|exists:users,id',
+                'departemen_id' => 'required|exists:departemens,id',
+                'jabatan_id' => 'required|exists:jabatans,id',
+                'status' => 'required|in:Used,Standby,Pinjam',
+                'tanggal_serah_terima' => 'nullable|date',
+                'keterangan' => 'nullable|string',
+            ];
+        }
+
+        // Regular user can only update kondisi_perangkat and status
         return [
-            'nomor_asset' => 'required|string|max:255|unique:assets,nomor_asset,' . $assetId,
-            'kategori_barang_id' => 'required|exists:kategori_barangs,id',
-            'nama_barang' => 'required|string|max:255',
-            'serial_number' => 'required|string|max:255|unique:assets,serial_number,' . $assetId,
-            'operation_system' => 'nullable|string|max:255',
             'kondisi_perangkat' => 'required|in:Baik,Rusak',
-            'site_id' => 'required|exists:sites,id',
-            'area_posisi_id' => 'required|exists:area_posisis,id',
-            'user_id' => 'nullable|exists:users,id',
-            'departemen_id' => 'required|exists:departemens,id',
-            'jabatan_id' => 'required|exists:jabatans,id',
             'status' => 'required|in:Used,Standby,Pinjam',
-            'tanggal_serah_terima' => 'nullable|date',
-            'keterangan' => 'nullable|string',
         ];
     }
 

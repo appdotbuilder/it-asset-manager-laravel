@@ -22,6 +22,8 @@ class AssetController extends Controller
      */
     public function index(Request $request)
     {
+        $user = auth()->user();
+        
         $query = Asset::with([
             'kategoriBarang', 
             'site', 
@@ -30,6 +32,12 @@ class AssetController extends Controller
             'departemen', 
             'jabatan'
         ]);
+
+        // Filter assets based on user role
+        if (!$user->isAdmin()) {
+            // Regular users can only see assets assigned to them
+            $query->where('user_id', $user->id);
+        }
 
         // Apply filters
         if ($request->has('kategori_barang_id') && $request->kategori_barang_id) {
@@ -83,6 +91,8 @@ class AssetController extends Controller
                 'status',
                 'search'
             ]),
+            'canCreate' => $user->isAdmin(),
+            'canManageUsers' => $user->isAdmin(),
         ]);
     }
 
@@ -91,6 +101,11 @@ class AssetController extends Controller
      */
     public function create()
     {
+        // Only admin can create assets
+        if (!auth()->user()->isAdmin()) {
+            abort(403);
+        }
+
         $formData = [
             'categories' => KategoriBarang::orderBy('nama_kategori_barang')->get(),
             'sites' => Site::orderBy('nama_site')->get(),
@@ -108,6 +123,11 @@ class AssetController extends Controller
      */
     public function store(StoreAssetRequest $request)
     {
+        // Only admin can create assets
+        if (!auth()->user()->isAdmin()) {
+            abort(403);
+        }
+
         $asset = Asset::create($request->validated());
 
         // Update category count
@@ -122,6 +142,13 @@ class AssetController extends Controller
      */
     public function show(Asset $asset)
     {
+        $user = auth()->user();
+        
+        // Check if user can view this asset
+        if (!$user->isAdmin() && $asset->user_id !== $user->id) {
+            abort(403);
+        }
+
         $asset->load([
             'kategoriBarang', 
             'site', 
@@ -132,7 +159,9 @@ class AssetController extends Controller
         ]);
 
         return Inertia::render('assets/show', [
-            'asset' => $asset
+            'asset' => $asset,
+            'canEdit' => $user->isAdmin() || $asset->user_id === $user->id,
+            'canDelete' => $user->isAdmin(),
         ]);
     }
 
@@ -141,6 +170,13 @@ class AssetController extends Controller
      */
     public function edit(Asset $asset)
     {
+        $user = auth()->user();
+        
+        // Check if user can edit this asset
+        if (!$user->isAdmin() && $asset->user_id !== $user->id) {
+            abort(403);
+        }
+
         $asset->load([
             'kategoriBarang', 
             'site', 
@@ -158,6 +194,8 @@ class AssetController extends Controller
             'users' => User::orderBy('name')->get(),
             'departments' => Departemen::orderBy('nama_departemen')->get(),
             'positions' => Jabatan::orderBy('nama_jabatan')->get(),
+            'canEditAll' => $user->isAdmin(),
+            'canEditLimited' => !$user->isAdmin() && $asset->user_id === $user->id,
         ];
 
         return Inertia::render('assets/edit', $formData);
@@ -168,11 +206,19 @@ class AssetController extends Controller
      */
     public function update(UpdateAssetRequest $request, Asset $asset)
     {
-        $oldCategoryId = $asset->kategori_barang_id;
-        $asset->update($request->validated());
+        $user = auth()->user();
+        $validatedData = $request->validated();
+        
+        // If user is not admin and this is their asset, only update allowed fields
+        if (!$user->isAdmin() && $asset->user_id === $user->id) {
+            $validatedData = array_intersect_key($validatedData, array_flip(['kondisi_perangkat', 'status']));
+        }
 
-        // Update category counts if category changed
-        if ($oldCategoryId !== $asset->kategori_barang_id) {
+        $oldCategoryId = $asset->kategori_barang_id;
+        $asset->update($validatedData);
+
+        // Update category counts if category changed (admin only)
+        if ($user->isAdmin() && isset($validatedData['kategori_barang_id']) && $oldCategoryId !== $asset->kategori_barang_id) {
             KategoriBarang::find($oldCategoryId)?->decrement('jumlah_barang');
             $asset->kategoriBarang()->increment('jumlah_barang');
         }
@@ -186,6 +232,11 @@ class AssetController extends Controller
      */
     public function destroy(Asset $asset)
     {
+        // Only admin can delete assets
+        if (!auth()->user()->isAdmin()) {
+            abort(403);
+        }
+
         // Update category count
         $asset->kategoriBarang()->decrement('jumlah_barang');
         

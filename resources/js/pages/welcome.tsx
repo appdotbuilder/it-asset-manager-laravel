@@ -58,12 +58,12 @@ export default function Welcome() {
                                 </div>
                             </div>
                             <h1 className="mb-6 text-5xl font-bold leading-tight lg:text-6xl">
-                                📊 <span className="bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">IT Asset</span><br />
-                                Inventory Management
+                                🚀 <span className="bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">Smart IT Asset</span><br />
+                                Management System
                             </h1>
                             <p className="mb-8 text-xl text-gray-600 leading-relaxed dark:text-gray-300">
-                                Take control of your organization's IT assets with our comprehensive tracking and management system. 
-                                Monitor, manage, and maintain all your technology resources in one centralized platform.
+                                Streamline your IT operations with powerful asset tracking, role-based access control, and comprehensive 
+                                inventory management. Perfect for organizations of any size looking to optimize their technology resources.
                             </p>
                             {!auth.user && (
                                 <div className="flex justify-center gap-4">
@@ -85,92 +85,128 @@ export default function Welcome() {
 
                         {/* Features Grid */}
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16 max-w-6xl">
-                            <div className="bg-white rounded-xl p-6 shadow-lg border border-gray-100 hover:shadow-xl transition-shadow dark:bg-gray-800 dark:border-gray-700">
-                                <div className="h-12 w-12 bg-blue-100 rounded-lg flex items-center justify-center mb-4 dark:bg-blue-900">
+                            <div className="bg-white rounded-xl p-6 shadow-lg border border-gray-100 hover:shadow-xl transition-all hover:scale-105 dark:bg-gray-800 dark:border-gray-700">
+                                <div className="h-12 w-12 bg-gradient-to-br from-blue-500 to-blue-600 rounded-lg flex items-center justify-center mb-4">
                                     <span className="text-2xl">💻</span>
                                 </div>
-                                <h3 className="text-xl font-bold mb-3">Asset Tracking</h3>
+                                <h3 className="text-xl font-bold mb-3">📦 Comprehensive Asset Tracking</h3>
                                 <p className="text-gray-600 dark:text-gray-300">
-                                    Track all your IT assets including laptops, desktops, servers, and peripherals with detailed information and serial numbers.
+                                    Track laptops, desktops, servers, and peripherals with detailed specifications, serial numbers, and condition monitoring.
                                 </p>
                             </div>
 
-                            <div className="bg-white rounded-xl p-6 shadow-lg border border-gray-100 hover:shadow-xl transition-shadow dark:bg-gray-800 dark:border-gray-700">
-                                <div className="h-12 w-12 bg-green-100 rounded-lg flex items-center justify-center mb-4 dark:bg-green-900">
-                                    <span className="text-2xl">📍</span>
+                            <div className="bg-white rounded-xl p-6 shadow-lg border border-gray-100 hover:shadow-xl transition-all hover:scale-105 dark:bg-gray-800 dark:border-gray-700">
+                                <div className="h-12 w-12 bg-gradient-to-br from-green-500 to-green-600 rounded-lg flex items-center justify-center mb-4">
+                                    <span className="text-2xl">🔑</span>
                                 </div>
-                                <h3 className="text-xl font-bold mb-3">Location Management</h3>
+                                <h3 className="text-xl font-bold mb-3">🛡️ Role-Based Security</h3>
                                 <p className="text-gray-600 dark:text-gray-300">
-                                    Monitor asset locations across multiple sites, offices, and departments with real-time positioning data.
+                                    Advanced RBAC system with admin and user roles. Admins manage everything, users update their assigned assets only.
                                 </p>
                             </div>
 
-                            <div className="bg-white rounded-xl p-6 shadow-lg border border-gray-100 hover:shadow-xl transition-shadow dark:bg-gray-800 dark:border-gray-700">
-                                <div className="h-12 w-12 bg-purple-100 rounded-lg flex items-center justify-center mb-4 dark:bg-purple-900">
+                            <div className="bg-white rounded-xl p-6 shadow-lg border border-gray-100 hover:shadow-xl transition-all hover:scale-105 dark:bg-gray-800 dark:border-gray-700">
+                                <div className="h-12 w-12 bg-gradient-to-br from-purple-500 to-purple-600 rounded-lg flex items-center justify-center mb-4">
                                     <span className="text-2xl">👥</span>
                                 </div>
-                                <h3 className="text-xl font-bold mb-3">User Assignment</h3>
+                                <h3 className="text-xl font-bold mb-3">🎯 Smart User Assignment</h3>
                                 <p className="text-gray-600 dark:text-gray-300">
-                                    Assign assets to specific users and departments, track handover dates, and manage asset transfers.
+                                    Assign assets to users across departments, track handover dates, and manage transfers with complete audit trails.
                                 </p>
                             </div>
 
-                            <div className="bg-white rounded-xl p-6 shadow-lg border border-gray-100 hover:shadow-xl transition-shadow dark:bg-gray-800 dark:border-gray-700">
-                                <div className="h-12 w-12 bg-yellow-100 rounded-lg flex items-center justify-center mb-4 dark:bg-yellow-900">
+                            <div className="bg-white rounded-xl p-6 shadow-lg border border-gray-100 hover:shadow-xl transition-all hover:scale-105 dark:bg-gray-800 dark:border-gray-700">
+                                <div className="h-12 w-12 bg-gradient-to-br from-yellow-500 to-yellow-600 rounded-lg flex items-center justify-center mb-4">
+                                    <span className="text-2xl">📍</span>
+                                </div>
+                                <h3 className="text-xl font-bold mb-3">🏢 Multi-Site Management</h3>
+                                <p className="text-gray-600 dark:text-gray-300">
+                                    Monitor assets across multiple office locations, sites, and departments with powerful filtering and search.
+                                </p>
+                            </div>
+
+                            <div className="bg-white rounded-xl p-6 shadow-lg border border-gray-100 hover:shadow-xl transition-all hover:scale-105 dark:bg-gray-800 dark:border-gray-700">
+                                <div className="h-12 w-12 bg-gradient-to-br from-red-500 to-red-600 rounded-lg flex items-center justify-center mb-4">
                                     <span className="text-2xl">🔧</span>
                                 </div>
-                                <h3 className="text-xl font-bold mb-3">Condition Monitoring</h3>
+                                <h3 className="text-xl font-bold mb-3">⚡ Real-Time Status Updates</h3>
                                 <p className="text-gray-600 dark:text-gray-300">
-                                    Track asset conditions, maintenance schedules, and repair history to optimize asset lifecycle.
+                                    Users can update device conditions and status in real-time. Track Good/Damaged states and Used/Standby/Loan status.
                                 </p>
                             </div>
 
-                            <div className="bg-white rounded-xl p-6 shadow-lg border border-gray-100 hover:shadow-xl transition-shadow dark:bg-gray-800 dark:border-gray-700">
-                                <div className="h-12 w-12 bg-red-100 rounded-lg flex items-center justify-center mb-4 dark:bg-red-900">
+                            <div className="bg-white rounded-xl p-6 shadow-lg border border-gray-100 hover:shadow-xl transition-all hover:scale-105 dark:bg-gray-800 dark:border-gray-700">
+                                <div className="h-12 w-12 bg-gradient-to-br from-indigo-500 to-indigo-600 rounded-lg flex items-center justify-center mb-4">
                                     <span className="text-2xl">📊</span>
                                 </div>
-                                <h3 className="text-xl font-bold mb-3">Reports & Analytics</h3>
+                                <h3 className="text-xl font-bold mb-3">📈 Advanced Analytics</h3>
                                 <p className="text-gray-600 dark:text-gray-300">
-                                    Generate comprehensive reports, export data to Excel/CSV, and gain insights into asset utilization.
+                                    Generate detailed reports, track asset utilization, monitor conditions, and export data for further analysis.
                                 </p>
                             </div>
+                        </div>
 
-                            <div className="bg-white rounded-xl p-6 shadow-lg border border-gray-100 hover:shadow-xl transition-shadow dark:bg-gray-800 dark:border-gray-700">
-                                <div className="h-12 w-12 bg-indigo-100 rounded-lg flex items-center justify-center mb-4 dark:bg-indigo-900">
-                                    <span className="text-2xl">🔒</span>
-                                </div>
-                                <h3 className="text-xl font-bold mb-3">Role-Based Access</h3>
-                                <p className="text-gray-600 dark:text-gray-300">
-                                    Secure user management with admin and user roles, ensuring proper access control and data security.
+                        {/* RBAC Feature Highlight */}
+                        <div className="bg-gradient-to-r from-blue-600 to-indigo-600 rounded-xl p-8 shadow-lg max-w-4xl w-full text-white mb-8">
+                            <div className="text-center">
+                                <h3 className="text-2xl font-bold mb-4">🛡️ Advanced Role-Based Access Control</h3>
+                                <p className="text-blue-100 mb-6 text-lg">
+                                    Secure, granular permissions ensure the right people have the right access
                                 </p>
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                    <div className="bg-white/10 backdrop-blur rounded-lg p-4">
+                                        <h4 className="font-bold text-lg mb-2">🔑 Admin Users</h4>
+                                        <ul className="text-blue-100 text-sm space-y-1">
+                                            <li>• Full CRUD access to all assets</li>
+                                            <li>• Create and manage user accounts</li>
+                                            <li>• Assign roles and permissions</li>
+                                            <li>• View system-wide analytics</li>
+                                        </ul>
+                                    </div>
+                                    <div className="bg-white/10 backdrop-blur rounded-lg p-4">
+                                        <h4 className="font-bold text-lg mb-2">👤 Regular Users</h4>
+                                        <ul className="text-blue-100 text-sm space-y-1">
+                                            <li>• View all assets in system</li>
+                                            <li>• Update condition & status of assigned assets</li>
+                                            <li>• Read-only access to other fields</li>
+                                            <li>• Filtered dashboard view</li>
+                                        </ul>
+                                    </div>
+                                </div>
                             </div>
                         </div>
 
                         {/* Stats Preview */}
                         <div className="bg-white rounded-xl p-8 shadow-lg border border-gray-100 max-w-4xl w-full dark:bg-gray-800 dark:border-gray-700">
-                            <h3 className="text-2xl font-bold mb-6 text-center">Powerful Dashboard Overview</h3>
+                            <h3 className="text-2xl font-bold mb-6 text-center">📊 Comprehensive Dashboard Analytics</h3>
                             <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
                                 <div className="text-center">
                                     <div className="text-3xl font-bold text-blue-600 mb-2">1,247</div>
-                                    <div className="text-gray-600 dark:text-gray-300">Total Assets</div>
+                                    <div className="text-gray-600 dark:text-gray-300">💻 Total Assets</div>
                                 </div>
                                 <div className="text-center">
                                     <div className="text-3xl font-bold text-green-600 mb-2">892</div>
-                                    <div className="text-gray-600 dark:text-gray-300">In Use</div>
+                                    <div className="text-gray-600 dark:text-gray-300">🔄 In Active Use</div>
                                 </div>
                                 <div className="text-center">
                                     <div className="text-3xl font-bold text-yellow-600 mb-2">245</div>
-                                    <div className="text-gray-600 dark:text-gray-300">Standby</div>
+                                    <div className="text-gray-600 dark:text-gray-300">⏸️ On Standby</div>
                                 </div>
                                 <div className="text-center">
                                     <div className="text-3xl font-bold text-purple-600 mb-2">15</div>
-                                    <div className="text-gray-600 dark:text-gray-300">Sites</div>
+                                    <div className="text-gray-600 dark:text-gray-300">🏢 Office Sites</div>
                                 </div>
+                            </div>
+                            <div className="mt-6 text-center">
+                                <p className="text-gray-600 dark:text-gray-300">
+                                    Real-time insights into your IT infrastructure with advanced filtering and reporting capabilities
+                                </p>
                             </div>
                         </div>
 
                         <footer className="mt-16 text-center text-gray-600 dark:text-gray-400">
-                            <p>Built with ❤️ using Laravel & React for efficient IT asset management</p>
+                            <p>🚀 Built with ❤️ using Laravel & React • Professional IT Asset Management Solution</p>
+                            <p className="text-sm mt-2">Featuring advanced RBAC, real-time updates, and comprehensive tracking</p>
                         </footer>
                     </main>
                 </div>

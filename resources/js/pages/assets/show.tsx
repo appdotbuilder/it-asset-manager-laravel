@@ -39,10 +39,12 @@ interface Asset {
 
 interface Props {
     asset: Asset;
+    canEdit: boolean;
+    canDelete: boolean;
     [key: string]: unknown;
 }
 
-export default function ShowAsset({ asset }: Props) {
+export default function ShowAsset({ asset, canEdit, canDelete }: Props) {
     const breadcrumbs: BreadcrumbItem[] = [
         {
             title: 'Assets',
@@ -96,12 +98,14 @@ export default function ShowAsset({ asset }: Props) {
                         >
                             ← Back to Assets
                         </Link>
-                        <Link
-                            href={`/assets/${asset.id}/edit`}
-                            className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg font-medium transition-colors"
-                        >
-                            ✏️ Edit Asset
-                        </Link>
+                        {canEdit && (
+                            <Link
+                                href={`/assets/${asset.id}/edit`}
+                                className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg font-medium transition-colors"
+                            >
+                                ✏️ Edit Asset
+                            </Link>
+                        )}
                     </div>
                 </div>
 
@@ -286,21 +290,27 @@ export default function ShowAsset({ asset }: Props) {
                                 <h3 className="text-lg font-semibold text-gray-900 dark:text-white">⚡ Quick Actions</h3>
                             </div>
                             <div className="p-6 space-y-3">
-                                <Link
-                                    href={`/assets/${asset.id}/edit`}
-                                    className="w-full bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg font-medium transition-colors flex items-center justify-center"
-                                >
-                                    ✏️ Edit Asset
-                                </Link>
+                                {canEdit && (
+                                    <Link
+                                        href={`/assets/${asset.id}/edit`}
+                                        className="w-full bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg font-medium transition-colors flex items-center justify-center"
+                                    >
+                                        ✏️ Edit Asset
+                                    </Link>
+                                )}
                                 <button className="w-full border border-gray-300 hover:border-gray-400 text-gray-700 dark:text-gray-300 dark:border-gray-600 dark:hover:border-gray-500 px-4 py-2 rounded-lg font-medium transition-colors flex items-center justify-center">
                                     📄 Print Asset Info
                                 </button>
-                                <button className="w-full border border-gray-300 hover:border-gray-400 text-gray-700 dark:text-gray-300 dark:border-gray-600 dark:hover:border-gray-500 px-4 py-2 rounded-lg font-medium transition-colors flex items-center justify-center">
-                                    📋 Duplicate Asset
-                                </button>
-                                <button className="w-full border border-red-300 hover:border-red-400 text-red-700 dark:text-red-400 dark:border-red-600 dark:hover:border-red-500 px-4 py-2 rounded-lg font-medium transition-colors flex items-center justify-center">
-                                    🗑️ Delete Asset
-                                </button>
+                                {canEdit && (
+                                    <button className="w-full border border-gray-300 hover:border-gray-400 text-gray-700 dark:text-gray-300 dark:border-gray-600 dark:hover:border-gray-500 px-4 py-2 rounded-lg font-medium transition-colors flex items-center justify-center">
+                                        📋 Duplicate Asset
+                                    </button>
+                                )}
+                                {canDelete && (
+                                    <button className="w-full border border-red-300 hover:border-red-400 text-red-700 dark:text-red-400 dark:border-red-600 dark:hover:border-red-500 px-4 py-2 rounded-lg font-medium transition-colors flex items-center justify-center">
+                                        🗑️ Delete Asset
+                                    </button>
+                                )}
                             </div>
                         </div>
                     </div>
